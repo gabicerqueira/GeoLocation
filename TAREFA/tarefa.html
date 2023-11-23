@@ -12,23 +12,46 @@
     <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js&quot"></script>
 
     <link rel="icon" href="img/logo.png">
-    <title>Document</title>
+    <title>GeoLocation</title>
 
     <style>
 
+        @font-face {
+            font-family: 'Lora';
+            src: url(fonts/Lora-Italic-VariableFont_wght.ttf);
+        }
+
         #map {
             height: 500px;
-            width: 100%;
+            width: 80%;
+            margin: 60px 0;
         }
 
         body{
             background: url(img/fundo.jpg);
             background-size: cover;
             background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         h1{
             color: white;
+        }
+
+        .header img{
+            width: 320px;
+            margin-top: 20px;
+        }
+
+        .header{
+            text-align: center;
+        }
+
+        h4{
+            color: white;
+            font: 500 20px 'Lora';
         }
 
     </style>
@@ -37,9 +60,11 @@
 <body>
     <div class="header">
         <img src="img/logo2.png" alt="logo">
-        <h1>GEOLOCATION</h1>
     </div>
 
+    <div class="texto">
+        <h4>Veja o trajeto da sua localização real até o seu destino!</h4>
+    </div>
     
 
     <div id="map"></div>
@@ -64,7 +89,7 @@
                 waypoints: [
                     L.latLng(la, lo),  // Latitude e longitude capturada no navegador do usuário
                     L.latLng(-23.5566516, -46.3136124) // Latitude e longitude de destino (por exemplo, Senai Suzano)
-                ],
+                ]
             }).addTo(map);
         }
 
