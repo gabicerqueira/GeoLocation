@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css&quot">
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js&quot"></script>
+
+    <link rel="icon" href="img/logo.png">
+    <title>Document</title>
+
+    <style>
+
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+
+        body{
+            background: url(img/fundo.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        h1{
+            color: white;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <img src="img/logo2.png" alt="logo">
+        <h1>GEOLOCATION</h1>
+    </div>
+
+    
+
+    <div id="map"></div>
+
+    <script>
+        var map = L.map('map').setView([0, 0], 13);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        var marker = L.marker([0, 0]).addTo(map);
+
+        navigator.geolocation.getCurrentPosition(funciona, erro);
+        function funciona(pos) {
+            var la = pos.coords.latitude;
+            var lo = pos.coords.longitude;
+
+            marker.setLatLng([la, lo]); //COLOCA O MARCADOR NA LOCALIZAÇÃO DO NAVEGADOR
+
+            L.Routing.control({
+                waypoints: [
+                    L.latLng(la, lo),  // Latitude e longitude capturada no navegador do usuário
+                    L.latLng(-23.5566516, -46.3136124) // Latitude e longitude de destino (por exemplo, Senai Suzano)
+                ],
+            }).addTo(map);
+        }
+
+        function erro() {
+            console.log('Não foi possível localizar');
+        }
+        var popup = L.popup();
+
+        function onMapClick(e) {
+            popup
+                .setLatLng(e.latlng)
+                .setContent("Você clicou na coordenada " + e.latlng.toString())
+                .openOn(map);
+        }
+
+        map.on('click', onMapClick);
+
+
+    </script>
+</body>
+
+</html>
